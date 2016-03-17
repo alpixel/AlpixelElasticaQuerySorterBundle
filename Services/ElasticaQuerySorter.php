@@ -3,7 +3,6 @@
 namespace Alpixel\Bundle\ElasticaQuerySorterBundle\Services;
 
 use Elastica\Query;
-use Elastica\Query\AbstractQuery;
 use FOS\ElasticaBundle\Repository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -12,11 +11,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * Class used in order to sort and paginate an Abstract Query
  * obtained from an elastic search repository
- * Data is stored in session to remember user choice
+ * Data is stored in session to remember user choice.
  */
 class ElasticaQuerySorter
 {
-
     protected $session;
     protected $request;
     protected $sessionData;
@@ -91,19 +89,18 @@ class ElasticaQuerySorter
         return $nbPage;
     }
 
-
     protected function addSort(Query &$query)
     {
-        $sortBy    = explode('-', $this->fetchData('sortBy'));
+        $sortBy = explode('-', $this->fetchData('sortBy'));
         $sortOrder = $this->fetchData('sortOrder');
 
-        $sort = array();
+        $sort = [];
         foreach ($sortBy as $element) {
             if (empty($element) === false && empty($sortOrder) === false) {
-                $sort[$element] = array(
+                $sort[$element] = [
                     'order'     => strtolower($sortOrder),
-                    'missing'   => '_last'
-                );
+                    'missing'   => '_last',
+                ];
             }
         }
 
@@ -117,7 +114,7 @@ class ElasticaQuerySorter
     public function fetchData($key)
     {
         $pageKey = (!empty($this->request)) ? $this->request->getPathInfo() : null;
-        $query   = (!empty($this->request)) ? $this->request->query : null;
+        $query = (!empty($this->request)) ? $this->request->query : null;
 
         if ($query === null) {
             return;
@@ -135,10 +132,9 @@ class ElasticaQuerySorter
             $value = $query->get($key);
             $this->sessionData[$pageKey][$key] = $value;
             $this->storeSessionData();
+
             return $value;
         }
-
-        return null;
     }
 
     public function storeSessionData()
