@@ -3,8 +3,6 @@
 namespace Alpixel\Bundle\ElasticaQuerySorterBundle\Twig\Extension;
 
 use Alpixel\Bundle\ElasticaQuerySorterBundle\Services\ElasticaQuerySorter;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Yaml\Parser;
 
 class ElasticaSorterExtension extends \Twig_Extension
 {
@@ -19,16 +17,16 @@ class ElasticaSorterExtension extends \Twig_Extension
 
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('elastica_sort', array($this, 'displaySort'), array(
-                'is_safe' => array('html'),
-                'needs_environment' => true
-            )),
-            new \Twig_SimpleFunction('elastica_clear_sort', array($this, 'clearSort'), array(
-                'is_safe' => array('html'),
-                'needs_environment' => true
-            )),
-        );
+        return [
+            new \Twig_SimpleFunction('elastica_sort', [$this, 'displaySort'], [
+                'is_safe'           => ['html'],
+                'needs_environment' => true,
+            ]),
+            new \Twig_SimpleFunction('elastica_clear_sort', [$this, 'clearSort'], [
+                'is_safe'           => ['html'],
+                'needs_environment' => true,
+            ]),
+        ];
     }
 
     public function clearSort(\Twig_Environment $twig)
@@ -40,12 +38,12 @@ class ElasticaSorterExtension extends \Twig_Extension
     {
         $isCurrentSort = ($this->sorter->fetchData('sortBy') == $sortKey);
 
-        return $twig->render($this->configuration['sort_link'], array(
+        return $twig->render($this->configuration['sort_link'], [
             'label'     => $label,
             'isCurrent' => $isCurrentSort,
             'sortKey'   => $sortKey,
             'sortOrder' => $this->sorter->fetchData('sortOrder'),
-        ));
+        ]);
     }
 
     public function getName()
