@@ -22,6 +22,9 @@ class AlpixelElasticaQuerySorterExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('alpixel_elastica_query_sorter.views', $config['views']);
+        $container->setParameter('alpixel_elastica_query_sorter.item_per_page', $config['item_per_page']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

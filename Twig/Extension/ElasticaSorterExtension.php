@@ -9,10 +9,12 @@ use Symfony\Component\Yaml\Parser;
 class ElasticaSorterExtension extends \Twig_Extension
 {
     protected $sorter;
+    protected $configuration;
 
-    public function __construct(ElasticaQuerySorter $sorter)
+    public function __construct(ElasticaQuerySorter $sorter, $configuration)
     {
         $this->sorter = $sorter;
+        $this->configuration = $configuration;
     }
 
     public function getFunctions()
@@ -31,14 +33,14 @@ class ElasticaSorterExtension extends \Twig_Extension
 
     public function clearSort(\Twig_Environment $twig)
     {
-        return $twig->render('AlpixelElasticaQuerySorterBundle:blocks:clear_sort.html.twig');
+        return $twig->render($this->configuration['clear_sort']);
     }
 
     public function displaySort(\Twig_Environment $twig, $label, $sortKey)
     {
         $isCurrentSort = ($this->sorter->fetchData('sortBy') == $sortKey);
 
-        return $twig->render('AlpixelElasticaQuerySorterBundle:blocks:sort_link.html.twig', array(
+        return $twig->render($this->configuration['sort_link'], array(
             'label'     => $label,
             'isCurrent' => $isCurrentSort,
             'sortKey'   => $sortKey,

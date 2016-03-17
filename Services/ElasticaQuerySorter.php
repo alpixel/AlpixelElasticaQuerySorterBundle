@@ -21,13 +21,13 @@ class ElasticaQuerySorter
     protected $request;
     protected $sessionData;
 
-    const MAX_PER_PAGE = 25;
     const NO_LIMIT = 99999;
 
-    public function __construct(RequestStack $requestStack, Session $session)
+    public function __construct(RequestStack $requestStack, Session $session, $configuration)
     {
         $this->session = $session;
         $this->request = $requestStack->getCurrentRequest();
+        $this->configuration['item_per_page'] = $configuration;
 
         if (isset($this->request) && isset($this->request->query)) {
             if ($this->request->query->has('clear_sort')) {
@@ -46,7 +46,7 @@ class ElasticaQuerySorter
     public function sort(Repository $repository, Query $query, $nbPerPage = null)
     {
         if ($nbPerPage === null) {
-            $nbPerPage = self::MAX_PER_PAGE;
+            $nbPerPage = $this->getItemPerPage();
         }
 
         //Creating the main elastica query
@@ -173,5 +173,10 @@ class ElasticaQuerySorter
     public function getSessionData()
     {
         return $this->sessionData;
+    }
+
+    public function getItemPerPage()
+    {
+        return $this->configuration['item_per_page'];
     }
 }
