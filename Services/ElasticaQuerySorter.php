@@ -20,6 +20,7 @@ class ElasticaQuerySorter
     protected $session;
     protected $request;
     protected $sessionData;
+    protected $configuration;
 
     const NO_LIMIT = 99999;
 
