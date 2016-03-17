@@ -1,8 +1,8 @@
 <?php
 
-namespace Alpixel\Bundle\ElasticaUtilsBundle\Twig\Extension;
+namespace Alpixel\Bundle\ElasticaQuerySorterBundle\Twig\Extension;
 
-use Alpixel\Bundle\ElasticaUtilsBundle\Services\ElasticaQuerySorter;
+use Alpixel\Bundle\ElasticaQuerySorterBundle\Services\ElasticaQuerySorter;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Parser;
 
@@ -31,14 +31,14 @@ class ElasticaSorterExtension extends \Twig_Extension
 
     public function clearSort(\Twig_Environment $twig)
     {
-        return $twig->render('AlpixelElasticaUtilsBundle:blocks:clear_sort.html.twig');
+        return $twig->render('AlpixelElasticaQuerySorterBundle:blocks:clear_sort.html.twig');
     }
 
     public function displaySort(\Twig_Environment $twig, $label, $sortKey)
     {
         $isCurrentSort = ($this->sorter->fetchData('sortBy') == $sortKey);
 
-        return $twig->render('AlpixelElasticaUtilsBundle:blocks:sort_link.html.twig', array(
+        return $twig->render('AlpixelElasticaQuerySorterBundle:blocks:sort_link.html.twig', array(
             'label'     => $label,
             'isCurrent' => $isCurrentSort,
             'sortKey'   => $sortKey,

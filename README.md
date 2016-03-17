@@ -1,4 +1,4 @@
-# AlpixelElasticaUtilsBundle
+# AlpixelElasticaQuerySorterBundle
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/1f9c3f6d-db92-41e0-b310-206206c8a96e/mini.png)](https://insight.sensiolabs.com/projects/1f9c3f6d-db92-41e0-b310-206206c8a96e)
 [![Build Status](https://travis-ci.org/alpixel/AlpixelElasticaQuerySorterBundle.svg?branch=master)](https://travis-ci.org/alpixel/AlpixelElasticaQuerySorterBundle)

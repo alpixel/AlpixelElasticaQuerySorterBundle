@@ -14,7 +14,7 @@ class AppKernel extends Kernel
             new \Alpixel\Bundle\MenuBundle\AlpixelMenuBundle(),
             new \WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new \FOS\ElasticaBundle\FOSElasticaBundle(),
-            new \Alpixel\Bundle\ElasticaUtilsBundle\AlpixelElasticaUtilsBundle(),
+            new \Alpixel\Bundle\ElasticaQuerySorterBundle\AlpixelElasticaQuerySorterBundle(),
         ];
 
         return $bundles;

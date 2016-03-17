@@ -1,10 +1,10 @@
 services:
     alpixel.services.elastica_query_sorter:
-        class: Alpixel\Bundle\ElasticaUtilsBundle\Services\ElasticaQuerySorter
+        class: Alpixel\Bundle\ElasticaQuerySorterBundle\Services\ElasticaQuerySorter
         arguments: ["@request_stack", "@session"]
 
     alpixel.twig.elastica_sorter_extension:
-        class: Alpixel\Bundle\ElasticaUtilsBundle\Twig\Extension\ElasticaSorterExtension
+        class: Alpixel\Bundle\ElasticaQuerySorterBundle\Twig\Extension\ElasticaSorterExtension
         arguments: ["@alpixel.services.elastica_query_sorter"]
         tags:
             - { name: twig.extension }

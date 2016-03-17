@@ -2,7 +2,7 @@
 
 <phpunit bootstrap="./Tests/bootstrap.php" colors="true" forceCoversAnnotation="true">
     <testsuites>
-        <testsuite name="AlpixelElasticaUtilsBundle Test Suite">
+        <testsuite name="AlpixelElasticaQuerySorterBundle Test Suite">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>

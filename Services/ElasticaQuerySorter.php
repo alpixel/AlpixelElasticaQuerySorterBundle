@@ -1,6 +1,6 @@
 <?php
 
-namespace Alpixel\Bundle\ElasticaUtilsBundle\Services;
+namespace Alpixel\Bundle\ElasticaQuerySorterBundle\Services;
 
 use Elastica\Query;
 use Elastica\Query\AbstractQuery;

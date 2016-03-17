@@ -1,6 +1,6 @@
 <?php
 
-namespace Alpixel\Bundle\ElasticaUtilsBundle\DependencyInjection;
+namespace Alpixel\Bundle\ElasticaQuerySorterBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class AlpixelElasticaUtilsExtension extends Extension
+class AlpixelElasticaQuerySorterExtension extends Extension
 {
     /**
      * {@inheritdoc}
