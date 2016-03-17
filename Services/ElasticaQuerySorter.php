@@ -20,25 +20,28 @@ class ElasticaQuerySorter
     protected $sessionData;
     protected $configuration;
 
-    const NO_LIMIT = 99999;
+    const NO_LIMIT             = 99999;
+    const SESSION_QUERY_SORTER = 'alpixel_elastica_query_sorter';
 
     public function __construct(RequestStack $requestStack, Session $session, $configuration)
     {
-        $this->session = $session;
         $this->request = $requestStack->getCurrentRequest();
+        if (empty($this->request)) {
+            return;
+        }
+
+        $this->session = $session;
         $this->configuration['item_per_page'] = $configuration;
 
-        if (isset($this->request) && isset($this->request->query)) {
-            if ($this->request->query->has('clear_sort')) {
-                $this->session->remove('elastica_query_sorter');
-            }
+        if (isset($this->request->query) && $this->request->query->has('clear_sort') === true) {
+            $this->session->remove(self::SESSION_QUERY_SORTER);
         }
 
         //Initializing the data in session
-        if (!$this->session->has('elastica_query_sorter')) {
+        if (!$this->session->has(self::SESSION_QUERY_SORTER)) {
             $this->sessionData = [];
         } else {
-            $this->sessionData = $this->session->get('elastica_query_sorter');
+            $this->sessionData = $this->session->get(self::SESSION_QUERY_SORTER);
         }
     }
 
@@ -113,8 +116,8 @@ class ElasticaQuerySorter
 
     public function fetchData($key)
     {
-        $pageKey = (!empty($this->request)) ? $this->request->getPathInfo() : null;
-        $query = (!empty($this->request)) ? $this->request->query : null;
+        $pageKey = $this->request->getPathInfo();
+        $query   = $this->request->query;
 
         if ($query === null) {
             return;
@@ -122,10 +125,10 @@ class ElasticaQuerySorter
 
         //Analyzing the session object to see if there is data in it
         //If data is given from Request, it will be override the session data
-        if (array_key_exists($pageKey, $this->sessionData) && !$query->has($key)) {
-            if (isset($this->sessionData[$pageKey][$key])) {
+        if (array_key_exists($pageKey, $this->sessionData) &&
+            !$query->has($key) &&
+            isset($this->sessionData[$pageKey][$key])) {
                 return $this->sessionData[$pageKey][$key];
-            }
         }
 
         if ($query->has('sortBy')) {
@@ -139,7 +142,7 @@ class ElasticaQuerySorter
 
     public function storeSessionData()
     {
-        $this->session->set('elastica_query_sorter', $this->sessionData);
+        $this->session->set(self::SESSION_QUERY_SORTER, $this->sessionData);
     }
 
     /**
