@@ -1,0 +1,8 @@
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: alpixel_elastica_query_sorter
+    database_user: root
+    database_password: root
+    secret: NotSoSecret
+    default_locale: fr

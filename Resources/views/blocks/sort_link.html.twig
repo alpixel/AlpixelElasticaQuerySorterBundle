@@ -1,0 +1,24 @@
+{% set requestAttributes = app.request.attributes %}
+{% set requestParams = requestAttributes.get('_route_params') %}
+
+
+
+{% if isCurrent %}
+    {% if sortOrder == 'asc' %}
+        {% set sortOrder = 'desc' %}
+        {% set arrowIcon = 'down' %}
+    {% else %}
+        {% set sortOrder = 'asc' %}
+        {% set arrowIcon = 'up' %}
+    {% endif %}
+{% else %}
+    {% set sortOrder = 'asc' %}
+    {% set arrowIcon = 'up' %}
+{% endif %}
+
+<a href='{{path(requestAttributes.get('_route'), requestParams)}}?sortBy={{sortKey}}&sortOrder={{sortOrder}}'>
+    {{label}}
+    {% if isCurrent %}
+        <i class='fa fa-arrow-circle-{{arrowIcon}} {% if isCurrent %}text-primary{% else %}text-muted{% endif %}'></i>
+    {% endif %}
+</a>
