@@ -20,7 +20,7 @@ class ElasticaQuerySorter
     protected $sessionData;
     protected $configuration;
 
-    const NO_LIMIT             = 99999;
+    const NO_LIMIT = 99999;
     const SESSION_QUERY_SORTER = 'alpixel_elastica_query_sorter';
 
     public function __construct(RequestStack $requestStack, Session $session, $configuration)
@@ -117,7 +117,7 @@ class ElasticaQuerySorter
     public function fetchData($key)
     {
         $pageKey = $this->request->getPathInfo();
-        $query   = $this->request->query;
+        $query = $this->request->query;
 
         if ($query === null) {
             return;
@@ -128,7 +128,7 @@ class ElasticaQuerySorter
         if (array_key_exists($pageKey, $this->sessionData) &&
             !$query->has($key) &&
             isset($this->sessionData[$pageKey][$key])) {
-                return $this->sessionData[$pageKey][$key];
+            return $this->sessionData[$pageKey][$key];
         }
 
         if ($query->has('sortBy')) {
