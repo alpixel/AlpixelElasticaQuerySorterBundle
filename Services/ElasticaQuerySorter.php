@@ -116,6 +116,10 @@ class ElasticaQuerySorter
 
     public function fetchData($key)
     {
+        if (empty($this->request)) {
+            return;
+        }
+
         $pageKey = $this->request->getPathInfo();
         $query = $this->request->query;
 
