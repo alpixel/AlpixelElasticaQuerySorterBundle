@@ -45,7 +45,7 @@ class ElasticaQuerySorter
         }
     }
 
-    public function sort(Repository $repository, Query $query, $nbPerPage = null)
+    public function sort(Repository $repository, Query $query, $nbPerPage = null, $defaultSort = [])
     {
         if ($nbPerPage === null) {
             $nbPerPage = $this->getItemPerPage();
@@ -55,7 +55,7 @@ class ElasticaQuerySorter
         $query->setFields(['_id']);
 
         //Analysing the request and the session data to add sorting
-        $this->addSort($query);
+        $this->addSort($query, $defaultSort);
 
         //Creating the paginator with the given repository
         $paginator = $repository->findPaginated($query);
@@ -92,17 +92,26 @@ class ElasticaQuerySorter
         return $nbPage;
     }
 
-    protected function addSort(Query &$query)
+    protected function addSort(Query &$query, $defaultSort = null)
     {
         $sortBy = explode('-', $this->fetchData('sortBy'));
         $sortOrder = $this->fetchData('sortOrder');
+
+        if ((empty($sortBy) || empty($sortBy[0])) && !empty($defaultSort) && !empty($defaultSort['sortBy'])) {
+            $sortBy = [$defaultSort['sortBy']];
+            if (!empty($defaultSort['sortOrder'])) {
+                $sortOrder = $defaultSort['sortOrder'];
+            } else {
+                $sortOrder = 'asc';
+            }
+        }
 
         $sort = [];
         foreach ($sortBy as $element) {
             if (empty($element) === false && empty($sortOrder) === false) {
                 $sort[$element] = [
-                    'order'     => strtolower($sortOrder),
-                    'missing'   => '_last',
+                    'order'   => strtolower($sortOrder),
+                    'missing' => '_last',
                 ];
             }
         }
@@ -131,7 +140,8 @@ class ElasticaQuerySorter
         //If data is given from Request, it will be override the session data
         if (array_key_exists($pageKey, $this->sessionData) &&
             !$query->has($key) &&
-            isset($this->sessionData[$pageKey][$key])) {
+            isset($this->sessionData[$pageKey][$key])
+        ) {
             return $this->sessionData[$pageKey][$key];
         }
 
